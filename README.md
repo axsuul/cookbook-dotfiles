@@ -12,6 +12,13 @@ Attributes
 
 Usage
 =====
-Always put this last in the run list so it dominatrixes any dotfiles placed by other cookbooks.
+Put this in your run list
 
     recipe[dotfiles]
+
+Also depends on these cookbooks
+
+- vim
+- oh-my-zsh
+- tmux
+- [homesick](https://github.com/fnichol/chef-homesick)

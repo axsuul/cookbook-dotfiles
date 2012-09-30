@@ -17,41 +17,21 @@
 # limitations under the License.
 #
 
-gem_package "dotify" do
-  version "0.6.6"
+# Install dependencies first so then we can overwrite any dotfiles
+# that may have been created from them
+include_recipe "vim"
+include_recipe "tmux"
+include_recipe "oh-my-zsh"
+include_recipe "homesick"   # gives us homesick_castle resource
+
+if node['instance_role'] == "vagrant"
+  node['dotfiles']['users'] << "vagrant"
 end
 
-node['dotfiles']['users'].each do |username|
-  home_path = "/home/#{username}"
-  dotify_path = "#{home_path}/.dotify"
-  
-  if File.exists? dotify_path
-    sync_action = :sync
-  else
-    execute "install dotfiles" do
-      cwd home_path
-      command "dotify github axsuul/dotfiles"
-      creates dotify_path
-      action :run
-      notifies :sync, "git[#{dotify_path}]", :immediately
-    end
-
-    sync_action = :nothing
-  end
-
-  # execute "update dotfiles" do
-  #   cwd dotify_path
-  #   command "git pull"
-  # end
-
-  execute "update dotfiles" do
-    cwd home_path
-    command "dotify unlink --force && dotify link --force"
-    action :nothing
-  end
-
-  git dotify_path do
-    action sync_action
-    notifies :run, "execute[update dotfiles]", :delayed  # run at the end so it overwrites
+node['dotfiles']['users'].uniq.each do |user|
+  homesick_castle "dotfiles" do
+    user user
+    source "https://github.com/axsuul/dotfiles.git"
+    action :update
   end
 end
