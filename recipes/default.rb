@@ -29,7 +29,20 @@ if node['instance_role'] == "vagrant"
 end
 
 node['dotfiles']['users'].uniq.each do |user|
-  homesick_castle "dotfiles" do
+  castle = "dotfiles"
+  castle_repo_path = "/home/#{user}/.homesick/repos/#{castle}"
+
+  if File.exists?(castle_repo_path)
+    # Reset hard the repo which will reset any uncommitted changes
+    # so we can pull any changes from origin
+    execute "reset dotfiles castle repo" do
+      user user
+      command "git reset --hard"
+      cwd castle_repo_path
+    end
+  end
+
+  homesick_castle castle do
     user user
     source "https://github.com/axsuul/dotfiles.git"
     action :update
