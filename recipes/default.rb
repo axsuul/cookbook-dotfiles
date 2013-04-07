@@ -44,7 +44,7 @@ node['dotfiles']['users'].uniq.each do |user|
 
   homesick_castle castle do
     user user
-    source "https://github.com/axsuul/dotfiles.git"
+    source "https://github.com/axsuul/dotfiles"
     action :update
   end
 end
