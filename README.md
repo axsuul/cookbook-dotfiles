@@ -1,7 +1,7 @@
 Description
 ===========
 
-For cooking my yummy dotfiles gourmet style.
+For cooking my yummy [dotfiles](https://github.com/axsuul/dotfiles) gourmet style.
 
 Attributes
 ==========
