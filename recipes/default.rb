@@ -25,7 +25,7 @@ include_recipe "oh-my-zsh"
 include_recipe "homesick"   # gives us homesick_castle resource
 
 if node['instance_role'] == "vagrant"
-  node['dotfiles']['users'] << "vagrant"
+  node.default['dotfiles']['users'] << "vagrant"
 end
 
 node['dotfiles']['users'].uniq.each do |user|
