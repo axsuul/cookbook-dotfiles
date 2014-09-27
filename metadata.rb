@@ -1,3 +1,4 @@
+name             "dotfiles"
 maintainer       "James Hu"
 maintainer_email "axsuul@gmail.com"
 license          "Apache 2.0"
@@ -12,6 +13,5 @@ depends "homesick"
 
 recipe "default", "Installs dotfiles"
 
-%w{ubuntu debian}.each do |os|
-  supports os
-end
+supprts "ubuntu"
+supprts "debian"
