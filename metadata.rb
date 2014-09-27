@@ -13,5 +13,5 @@ depends "homesick"
 
 recipe "default", "Installs dotfiles"
 
-supprts "ubuntu"
-supprts "debian"
+supports "ubuntu"
+supports "debian"
